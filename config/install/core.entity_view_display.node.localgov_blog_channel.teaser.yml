@@ -1,0 +1,18 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.localgov_blog_channel.localgov_blog_channel_featured
+    - node.type.localgov_blog_channel
+  module:
+    - user
+id: node.localgov_blog_channel.teaser
+targetEntityType: node
+bundle: localgov_blog_channel
+mode: teaser
+content: {  }
+hidden:
+  links: true
+  localgov_blog_channel_featured: true
+  search_api_excerpt: true
