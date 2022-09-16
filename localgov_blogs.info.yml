@@ -1,0 +1,16 @@
+name: 'LocalGov Blogs'
+description: Provides blog channel and blog post content types with related views for LocalGov Drupal.
+core_version_requirement: ^9
+type: module
+package: LocalGov Drupal
+
+dependencies:
+  # Core
+  - drupal:link
+  - drupal:path
+  - drupal:taxonomy
+  - drupal:views
+  # Contrib
+  - field_group:field_group
+  # LocalGov Drupal
+  - localgov_core:localgov_core
