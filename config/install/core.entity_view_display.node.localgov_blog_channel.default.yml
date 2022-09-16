@@ -5,7 +5,6 @@ dependencies:
     - field.field.node.localgov_blog_channel.localgov_blog_channel_featured
     - node.type.localgov_blog_channel
   module:
-    - field_formatter_class
     - user
 id: node.localgov_blog_channel.default
 targetEntityType: node
@@ -18,9 +17,7 @@ content:
     settings:
       view_mode: teaser
       link: false
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
     weight: 0
     region: content
 hidden:
