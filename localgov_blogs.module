@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * LocalGov DrupalBlogs module file.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+
+/**
+ * Implements hook_field_widget_complete_form_alter().
+ */
+function localgov_blogs_field_widget_complete_form_alter(&$field_widget_complete_form, FormStateInterface $form_state, $context) {
+
+  // Check the blog channel select options.
+  $field_definition = $context['items']->getFieldDefinition();
+  if ($field_definition->getName() == 'localgov_blog_channel' && isset($field_widget_complete_form['widget']['#options'])) {
+    $options = $field_widget_complete_form['widget']['#options'];
+
+    // If there are no blog channels display a warning.
+    if (count($options) == 1 && isset($options['_none'])) {
+      \Drupal::messenger()->addWarning(t('There are no blogs channels. Please <a href="/node/add/localgov_blog_channel">create a blog channel</a> to add this post to.'));
+    }
+
+    // If there's only one blog channel just use that.
+    unset($options['_none']);
+    if (count($options) == 1) {
+      $field_widget_complete_form['widget']['#value'] = key($options);
+      $field_widget_complete_form['widget']['#type'] = 'value';
+    }
+  }
+}
