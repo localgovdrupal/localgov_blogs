@@ -5,7 +5,78 @@
  * LocalGov DrupalBlogs module file.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+use Drupal\views\Views;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function localgov_blogs_entity_extra_field_info() {
+  $fields = [];
+
+  // Add a blog listing field to blog channels.
+  $fields['node']['localgov_blog_channel']['display']['localgov_blog_listing'] = [
+    'label' => t('Blog post listing'),
+    'description' => t('View of blog posts without the the featured posts.'),
+    'weight' => -20,
+    'visible' => TRUE,
+  ];
+
+  // Add promote to blog channel field to posts.
+  $fields['node']['localgov_blog_post']['form']['localgov_blog_channel_promote'] = [
+    'label' => t('Promote on blog channel'),
+    'description' => t("Add to promoted blog posts for selected channel."),
+    'weight' => 1,
+    'visible' => TRUE,
+  ];
+
+  return $fields;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for node entities.
+ */
+function localgov_blogs_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
+
+  // Add the blog listing view to blog channels.
+  if ($display->getComponent('localgov_blog_listing')) {
+    $view_id = 'localgov_blog_list';
+    $display_id = 'blog_listing';
+    $view = Views::getView($view_id);
+    if ($view && $view->access($display_id)) {
+      $build['localgov_blog_listing'] = [
+        '#type' => 'view',
+        '#name' => $view_id,
+        '#display_id' => $display_id,
+        '#arguments' => [
+          $node->id(),
+        ],
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function localgov_blogs_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if (
+    ($form_id == 'node_localgov_blog_post_form' || $form_id == 'node_localgov_blog_post_edit_form') &&
+    ($form_display = $form_state->get('form_display')) &&
+    $form_display->getComponent('localgov_blog_channel_promote')
+  ) {
+
+    $form['localgov_blog_listing'] = [
+      '#title' => t('Promote on channel'),
+      '#type' => 'checkbox',
+      '#description' => t("Add to promoted posts on the channel."),
+    ];
+    $form['#group_children']['localgov_blog_listing'] = 'group_about';
+  }
+}
 
 /**
  * Implements hook_field_widget_complete_form_alter().

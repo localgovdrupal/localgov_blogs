@@ -4,9 +4,13 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.localgov_blog_post.body
+    - field.field.node.localgov_blog_post.localgov_blog_categories
     - field.field.node.localgov_blog_post.localgov_blog_channel
+    - field.field.node.localgov_blog_post.localgov_blog_image
+    - field.field.node.localgov_blog_post.localgov_blog_related_posts
     - node.type.localgov_blog_post
   module:
+    - field_formatter_class
     - text
     - user
 id: node.localgov_blog_post.teaser
@@ -20,9 +24,22 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
+    weight: 1
+    region: content
+  localgov_blog_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: token
+      link: false
+    third_party_settings:
+      field_formatter_class:
+        class: ''
     weight: 0
     region: content
 hidden:
   links: true
+  localgov_blog_categories: true
   localgov_blog_channel: true
+  localgov_blog_related_posts: true
   search_api_excerpt: true

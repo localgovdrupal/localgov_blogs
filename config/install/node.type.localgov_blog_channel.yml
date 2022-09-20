@@ -1,7 +1,12 @@
 langcode: en
 status: true
-dependencies: {  }
-third_party_settings: {  }
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
 name: 'Blog channel'
 type: localgov_blog_channel
 description: 'Page for listing blog posts.'
