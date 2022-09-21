@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\views\Views;
 
@@ -63,18 +64,67 @@ function localgov_blogs_node_view(array &$build, NodeInterface $node, EntityView
  */
 function localgov_blogs_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  // Add promote to channel field to blog posts.
   if (
     ($form_id == 'node_localgov_blog_post_form' || $form_id == 'node_localgov_blog_post_edit_form') &&
     ($form_display = $form_state->get('form_display')) &&
     $form_display->getComponent('localgov_blog_channel_promote')
   ) {
 
-    $form['localgov_blog_listing'] = [
+    // Check if the current post is promoted on channel.
+    $post = $form_state->getFormObject()->getEntity();
+    $channel = $post->get('localgov_blog_channel')->entity;
+    if (!is_null($channel)) {
+      $featured_posts = $channel->get('localgov_blog_channel_featured')->getValue();
+      $promoted = in_array($post->id(), array_column($featured_posts, 'target_id'));
+    }
+    else {
+      $promoted = FALSE;
+    }
+
+    $form['localgov_blog_channel_promote'] = [
       '#title' => t('Promote on channel'),
       '#type' => 'checkbox',
-      '#description' => t("Add to promoted posts on the channel."),
+      '#description' => t("Include in promoted posts on the channel."),
+      '#default_value' => $promoted,
+      '#weight' => 3,
     ];
-    $form['#group_children']['localgov_blog_listing'] = 'group_about';
+    $form['#fieldgroups']['group_about']->children[] = 'localgov_blog_channel_promote';
+    $form['actions']['submit']['#submit'][] = 'localgov_blogs_blog_channel_promote_submit';
+  }
+}
+
+/**
+ * Custom submit handler for localgov_blog_channel_promote field.
+ */
+function localgov_blogs_blog_channel_promote_submit(array $form, FormStateInterface $form_state) {
+
+  if (
+    $form_state->getFormObject() instanceof NodeForm &&
+    !is_null($form_state->getValue('localgov_blog_channel_promote'))
+  ) {
+    $post = $form_state->getFormObject()->getEntity();
+    $channel = $post->get('localgov_blog_channel')->entity;
+    $featured_posts = $channel->get('localgov_blog_channel_featured')->getValue();
+    $to_promote = $form_state->getValue('localgov_blog_channel_promote');
+    $is_promoted = in_array($post->id(), array_column($featured_posts, 'target_id'));
+
+    if ($to_promote != $is_promoted) {
+      if ($to_promote) {
+
+        // Add to promoted posts.
+        array_unshift($featured_posts, ['target_id' => $post->id()]);
+        $channel->get('localgov_blog_channel_featured')->setValue($featured_posts);
+        $channel->save();
+      }
+      else {
+
+        // Remove from promoted posts.
+        $i = array_search(['target_id' => $post->id()], $featured_posts);
+        $channel->get('localgov_blog_channel_featured')->removeItem($i);
+        $channel->save();
+      }
+    }
   }
 }
 

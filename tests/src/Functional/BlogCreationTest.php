@@ -44,7 +44,7 @@ class BlogCreationTest extends BrowserTestBase {
   }
 
   /**
-   * Test the node create forms.
+   * Test the blog post create form.
    */
   public function testBlogChannelSelection() {
 
@@ -72,7 +72,8 @@ class BlogCreationTest extends BrowserTestBase {
       ->accessCheck(FALSE)
       ->condition('title', 'Blog post 1')
       ->execute();
-    $post = Node::load(reset($nids));
+    $node_storage = $node = \Drupal::entityTypeManager()->getStorage('node');
+    $post = $node_storage->load(reset($nids));
     $this->assertSame($channel->id(), $post->get('localgov_blog_channel')->target_id);
 
     // Check channel select for multiple channels.
@@ -85,6 +86,26 @@ class BlogCreationTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Blog channel');
     $this->assertSession()->responseContains('Channel 1');
     $this->assertSession()->responseContains('Channel 2');
+
+    // Check promote on channel field.
+    $this->drupalGet('/node/' . $post->id() . '/edit');
+    $this->submitForm([
+      'localgov_blog_channel_promote' => 1,
+    ], 'Save');
+    $channel = $node_storage->load($channel->id());
+    $featured_posts = [
+      ['target_id' => $post->id()],
+    ];
+    $this->assertSame($featured_posts, $channel->get('localgov_blog_channel_featured')->getValue());
+
+    // Check unpromote.
+    $this->drupalGet('/node/' . $post->id() . '/edit');
+    $this->submitForm([
+      'localgov_blog_channel_promote' => 0,
+    ], 'Save');
+    $node_storage->resetCache([$channel->id()]);
+    $channel = $node_storage->load($channel->id());
+    $this->assertEmpty($channel->get('localgov_blog_channel_featured')->getValue());
   }
 
 }
