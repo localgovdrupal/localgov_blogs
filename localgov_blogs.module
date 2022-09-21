@@ -89,7 +89,9 @@ function localgov_blogs_form_alter(&$form, FormStateInterface $form_state, $form
       '#default_value' => $promoted,
       '#weight' => 3,
     ];
-    $form['#fieldgroups']['group_about']->children[] = 'localgov_blog_channel_promote';
+    if (isset($form['#fieldgroups'])) {
+      $form['#fieldgroups']['group_about']->children[] = 'localgov_blog_channel_promote';
+    }
     $form['actions']['submit']['#submit'][] = 'localgov_blogs_blog_channel_promote_submit';
   }
 }
