@@ -90,7 +90,7 @@ function localgov_blogs_field_widget_complete_form_alter(&$field_widget_complete
 
     // If there are no blog channels display a warning.
     if (count($options) == 1 && isset($options['_none'])) {
-      \Drupal::messenger()->addWarning(t('There are no blogs channels. Please <a href="/node/add/localgov_blog_channel">create a blog channel</a> to add this post to.'));
+      \Drupal::messenger()->addWarning(t('There are no blogs channels. Please <a href="./localgov_blog_channel">create a blog channel</a> to add this post to.'));
     }
 
     // If there's only one blog channel just use that.

@@ -6,6 +6,7 @@
     "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "require": {
-        "localgovdrupal/localgov_core": "^2.1"
+        "localgovdrupal/localgov_core": "^2.1",
+        "localgovdrupal/localgov_topics": "^1.0"
     }
 }

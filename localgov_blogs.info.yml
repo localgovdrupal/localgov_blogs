@@ -8,9 +8,10 @@ dependencies:
   # Core
   - drupal:link
   - drupal:path
-  - drupal:taxonomy
   - drupal:views
   # Contrib
   - field_group:field_group
   # LocalGov Drupal
   - localgov_core:localgov_core
+  - localgov_core:localgov_media
+  - localgov_topics:localgov_topics

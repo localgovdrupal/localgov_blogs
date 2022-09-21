@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.localgov_blog_post.localgov_blog_related_posts
     - node.type.localgov_blog_post
   module:
-    - field_formatter_class
     - text
     - user
 id: node.localgov_blog_post.teaser
@@ -32,9 +31,7 @@ content:
     settings:
       view_mode: token
       link: false
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
     weight: 0
     region: content
 hidden:
