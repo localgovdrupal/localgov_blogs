@@ -5,10 +5,12 @@ dependencies:
     - field.field.node.localgov_blog_post.body
     - field.field.node.localgov_blog_post.localgov_blog_categories
     - field.field.node.localgov_blog_post.localgov_blog_channel
+    - field.field.node.localgov_blog_post.localgov_blog_date
     - field.field.node.localgov_blog_post.localgov_blog_image
     - field.field.node.localgov_blog_post.localgov_blog_related_posts
     - node.type.localgov_blog_post
   module:
+    - datetime
     - field_group
     - media_library
     - path
@@ -37,6 +39,7 @@ third_party_settings:
         - localgov_blog_channel
         - localgov_blog_channel_promote
         - localgov_blog_categories
+        - localgov_blog_date
       label: About
       region: content
       parent_name: group_tabs
@@ -81,7 +84,7 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: h16iRAd0nx0MlzBTFR-jN7Cw9x6evTyGnyisWsZswps
+  default_config_hash: dhH68VBsPgDvQU4dbZK7lScRI589tKIhaPiAwl_fyI0
 id: node.localgov_blog_post.default
 targetEntityType: node
 bundle: localgov_blog_post
@@ -99,7 +102,7 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 6
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -124,6 +127,12 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  localgov_blog_date:
+    type: datetime_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   localgov_blog_image:
     type: media_library_widget
     weight: 26
@@ -143,13 +152,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 7
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 8
+    weight: 5
     region: content
     settings:
       display_label: true
@@ -164,7 +173,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 5
+    weight: 1
     region: content
     settings:
       match_operator: CONTAINS

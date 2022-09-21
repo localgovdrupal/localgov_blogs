@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.localgov_blog_date
+    - node.type.localgov_blog_post
+  module:
+    - datetime
+id: node.localgov_blog_post.localgov_blog_date
+field_name: localgov_blog_date
+entity_type: node
+bundle: localgov_blog_post
+label: 'Blog date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
