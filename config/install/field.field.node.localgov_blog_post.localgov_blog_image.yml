@@ -10,7 +10,7 @@ field_name: localgov_blog_image
 entity_type: node
 bundle: localgov_blog_post
 label: Image
-description: ''
+description: 'Used in teaser displays, such as the Blog channel.'
 required: false
 translatable: false
 default_value: {  }
