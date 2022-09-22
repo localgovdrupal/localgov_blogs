@@ -83,8 +83,6 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
-_core:
-  default_config_hash: dhH68VBsPgDvQU4dbZK7lScRI589tKIhaPiAwl_fyI0
 id: node.localgov_blog_post.default
 targetEntityType: node
 bundle: localgov_blog_post
