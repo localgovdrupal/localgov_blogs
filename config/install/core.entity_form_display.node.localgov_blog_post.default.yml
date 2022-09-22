@@ -3,10 +3,10 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_blog_post.body
+    - field.field.node.localgov_blog_post.field_media_image
     - field.field.node.localgov_blog_post.localgov_blog_categories
     - field.field.node.localgov_blog_post.localgov_blog_channel
     - field.field.node.localgov_blog_post.localgov_blog_date
-    - field.field.node.localgov_blog_post.localgov_blog_image
     - field.field.node.localgov_blog_post.localgov_blog_related_posts
     - node.type.localgov_blog_post
   module:
@@ -37,9 +37,9 @@ third_party_settings:
       children:
         - title
         - localgov_blog_channel
+        - localgov_blog_date
         - localgov_blog_channel_promote
         - localgov_blog_categories
-        - localgov_blog_date
       label: About
       region: content
       parent_name: group_tabs
@@ -54,7 +54,7 @@ third_party_settings:
         required_fields: true
     group_content:
       children:
-        - localgov_blog_image
+        - field_media_image
         - body
       label: Content
       region: content
@@ -90,7 +90,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 27
+    weight: 1
     region: content
     settings:
       rows: 9
@@ -103,6 +103,13 @@ content:
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_media_image:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
     third_party_settings: {  }
   localgov_blog_categories:
     type: entity_reference_autocomplete
@@ -130,13 +137,6 @@ content:
     weight: 3
     region: content
     settings: {  }
-    third_party_settings: {  }
-  localgov_blog_image:
-    type: media_library_widget
-    weight: 26
-    region: content
-    settings:
-      media_types: {  }
     third_party_settings: {  }
   localgov_blog_related_posts:
     type: entity_reference_autocomplete

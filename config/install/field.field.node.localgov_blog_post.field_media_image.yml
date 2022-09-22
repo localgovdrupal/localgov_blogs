@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.localgov_blog_image
+    - field.storage.node.field_media_image
     - media.type.image
     - node.type.localgov_blog_post
-id: node.localgov_blog_post.localgov_blog_image
-field_name: localgov_blog_image
+id: node.localgov_blog_post.field_media_image
+field_name: field_media_image
 entity_type: node
 bundle: localgov_blog_post
 label: Image
 description: 'Used in teaser displays, such as the Blog channel.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
