@@ -6,6 +6,7 @@ package: LocalGov Drupal
 
 dependencies:
   # Core
+  - drupal:datetime
   - drupal:link
   - drupal:path
   - drupal:views
