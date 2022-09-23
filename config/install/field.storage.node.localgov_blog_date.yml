@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   module:
-    - media
+    - datetime
     - node
-id: node.localgov_blog_image
-field_name: localgov_blog_image
+id: node.localgov_blog_date
+field_name: localgov_blog_date
 entity_type: node
-type: entity_reference
+type: datetime
 settings:
-  target_type: media
-module: core
+  datetime_type: date
+module: datetime
 locked: false
 cardinality: 1
 translatable: true

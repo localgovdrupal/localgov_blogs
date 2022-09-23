@@ -210,6 +210,7 @@ display:
           table: node__localgov_blog_channel_featured
           field: localgov_blog_channel_featured
           plugin_id: standard
+      css_class: 'view--teasers lgd-teaser-list'
       header: {  }
       footer: {  }
       display_extenders: {  }

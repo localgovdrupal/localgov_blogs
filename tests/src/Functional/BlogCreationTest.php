@@ -51,7 +51,7 @@ class BlogCreationTest extends BrowserTestBase {
     $this->drupalGet('/node/add/localgov_blog_post');
     $this->assertSession()->pageTextContains('Warning message');
     $this->assertSession()->pageTextContains('There are no blogs channels.');
-    $this->assertSession()->pageTextContains('Blog channel');
+    $this->assertSession()->responseContains('name="localgov_blog_channel"');
 
     // Check blog channel automatic selection when one channel.
     $this->drupalGet('/node/add/localgov_blog_channel');
@@ -61,7 +61,7 @@ class BlogCreationTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
     $this->drupalGet('/node/add/localgov_blog_post');
-    $this->assertSession()->pageTextNotContains('Blog channel');
+    $this->assertSession()->responseNotContains('name="localgov_blog_channel"');
     $this->submitForm([
       'title[0][value]' => 'Blog post 1',
       'body[0][summary]' => 'Blog post 1 summary',
@@ -82,9 +82,9 @@ class BlogCreationTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
     $this->drupalGet('/node/add/localgov_blog_post');
-    $this->assertSession()->pageTextContains('Blog channel');
-    $this->assertSession()->responseContains('Channel 1');
-    $this->assertSession()->responseContains('Channel 2');
+    $this->assertSession()->responseContains('name="localgov_blog_channel"');
+    $this->assertSession()->responseContains('Channel 1</option>');
+    $this->assertSession()->responseContains('Channel 2</option>');
 
     // Check promote on channel field.
     $this->drupalGet('/node/' . $post->id() . '/edit');
