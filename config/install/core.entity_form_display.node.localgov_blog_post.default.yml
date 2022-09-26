@@ -13,7 +13,6 @@ dependencies:
   module:
     - datetime
     - field_group
-    - layout_paragraphs
     - media_library
     - paragraphs
     - path
