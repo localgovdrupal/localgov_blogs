@@ -14,7 +14,6 @@ dependencies:
     - datetime
     - field_group
     - media_library
-    - paragraphs
     - path
     - text
 third_party_settings:
