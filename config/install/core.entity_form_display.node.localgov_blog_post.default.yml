@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_blog_post.body
+    - field.field.node.localgov_blog_post.localgov_blog_author
     - field.field.node.localgov_blog_post.field_media_image
     - field.field.node.localgov_blog_post.localgov_blog_categories
     - field.field.node.localgov_blog_post.localgov_blog_channel
@@ -12,7 +13,9 @@ dependencies:
   module:
     - datetime
     - field_group
+    - layout_paragraphs
     - media_library
+    - paragraphs
     - path
     - text
 third_party_settings:
@@ -36,6 +39,7 @@ third_party_settings:
     group_about:
       children:
         - title
+        - localgov_blog_author
         - localgov_blog_channel
         - localgov_blog_date
         - localgov_blog_channel_promote
@@ -103,6 +107,16 @@ content:
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  localgov_blog_author:
+    type: entity_reference_autocomplete
+    weight: 31
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_media_image:
     type: media_library_widget
