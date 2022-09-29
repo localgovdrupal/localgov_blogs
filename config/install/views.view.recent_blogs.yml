@@ -328,7 +328,7 @@ display:
       footer: {  }
       display_extenders: {  }
       displays:
-        block_2: block_2
+        block: block
       attachment_position: after
     cache_metadata:
       max-age: -1
@@ -340,8 +340,8 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.localgov_blog_date'
-  block_2:
-    id: block_2
+  block:
+    id: block
     display_title: 'Blog sidebar'
     display_plugin: block
     position: 2
