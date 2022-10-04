@@ -12,6 +12,7 @@ dependencies:
   - drupal:views
   # Contrib
   - field_group:field_group
+  - node_read_time:node_read_time
   # LocalGov Drupal
   - localgov_core:localgov_core
   - localgov_core:localgov_media
