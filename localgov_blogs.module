@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\views\Views;
+use Drupal\localgov_roles\RolesHelper;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -152,4 +153,84 @@ function localgov_blogs_field_widget_complete_form_alter(&$field_widget_complete
       $field_widget_complete_form['widget']['#type'] = 'value';
     }
   }
+}
+
+/**
+ * Implements hook_localgov_roles_default().
+ */
+function localgov_blogs_localgov_roles_default(): array {
+
+  // Content editing permissions.
+  $perms = [
+    RolesHelper::EDITOR_ROLE => [
+      'create localgov_blog_post content',
+      'delete any localgov_blog_post content',
+      'delete localgov_blog_post revisions',
+      'delete own localgov_blog_post content',
+      'edit any localgov_blog_post content',
+      'edit own localgov_blog_post content',
+      'revert localgov_blog_post revisions',
+      'view localgov_blog_post revisions',
+      'create localgov_blog_channel content',
+      'delete any localgov_blog_channel content',
+      'delete localgov_blog_channel revisions',
+      'delete own localgov_blog_channel content',
+      'edit any localgov_blog_channel content',
+      'edit own localgov_blog_channel content',
+      'revert localgov_blog_channel revisions',
+      'view localgov_blog_channel revisions',
+    ],
+    RolesHelper::AUTHOR_ROLE => [
+      'create localgov_blog_post content',
+      'delete own localgov_blog_post content',
+      'edit own localgov_blog_post content',
+      'revert localgov_blog_post revisions',
+      'view localgov_blog_post revisions',
+      'create localgov_blog_channel content',
+      'delete own localgov_blog_channel content',
+      'edit own localgov_blog_channel content',
+      'revert localgov_blog_channel revisions',
+      'view localgov_blog_channel revisions',
+    ],
+    RolesHelper::CONTRIBUTOR_ROLE => [
+      'create localgov_blog_post content',
+      'delete own localgov_blog_post content',
+      'edit own localgov_blog_post content',
+      'view localgov_blog_post revisions',
+      'create localgov_blog_channel content',
+      'delete own localgov_blog_channel content',
+      'edit own localgov_blog_channel content',
+      'view localgov_blog_channel revisions',
+    ],
+  ];
+
+  // Content scheduling permissions required by localgov_workflows.
+  if (\Drupal::moduleHandler()->moduleExists('localgov_workflows')) {
+    $perms[RolesHelper::EDITOR_ROLE] = array_merge($perms[RolesHelper::EDITOR_ROLE], [
+      'add scheduled transitions node localgov_blog_post',
+      'reschedule scheduled transitions node localgov_blog_post',
+      'view scheduled transitions node localgov_blog_post',
+      'add scheduled transitions node localgov_blog_channel',
+      'reschedule scheduled transitions node localgov_blog_channel',
+      'view scheduled transitions node localgov_blog_channel',
+    ]);
+    $perms[RolesHelper::AUTHOR_ROLE] = array_merge($perms[RolesHelper::AUTHOR_ROLE], [
+      'add scheduled transitions node localgov_blog_post',
+      'reschedule scheduled transitions node localgov_blog_post',
+      'view scheduled transitions node localgov_blog_post',
+      'add scheduled transitions node localgov_blog_channel',
+      'reschedule scheduled transitions node localgov_blog_channel',
+      'view scheduled transitions node localgov_blog_channel',
+    ]);
+    $perms[RolesHelper::CONTRIBUTOR_ROLE] = array_merge($perms[RolesHelper::CONTRIBUTOR_ROLE], [
+      'add scheduled transitions node localgov_blog_post',
+      'reschedule scheduled transitions node localgov_blog_post',
+      'view scheduled transitions node localgov_blog_post',
+      'add scheduled transitions node localgov_blog_channel',
+      'reschedule scheduled transitions node localgov_blog_channel',
+      'view scheduled transitions node localgov_blog_channel',
+    ]);
+  }
+
+  return $perms;
 }
