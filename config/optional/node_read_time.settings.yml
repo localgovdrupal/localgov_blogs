@@ -1,0 +1,4 @@
+reading_time:
+  container:
+    localgov_blog_post:
+      is_activated: 1

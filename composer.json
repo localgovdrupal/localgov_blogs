@@ -7,6 +7,7 @@
     "minimum-stability": "dev",
     "require": {
         "localgovdrupal/localgov_core": "^2.1",
-        "localgovdrupal/localgov_topics": "^1.0"
+        "localgovdrupal/localgov_topics": "^1.0",
+        "drupal/node_read_time": "^1.6"
     }
 }
