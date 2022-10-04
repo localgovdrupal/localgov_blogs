@@ -179,6 +179,9 @@ function localgov_blogs_localgov_roles_default(): array {
       'edit own localgov_blog_channel content',
       'revert localgov_blog_channel revisions',
       'view localgov_blog_channel revisions',
+      'create terms in localgov_blog_author',
+      'delete terms in localgov_blog_author',
+      'edit terms in localgov_blog_author',
     ],
     RolesHelper::AUTHOR_ROLE => [
       'create localgov_blog_post content',
