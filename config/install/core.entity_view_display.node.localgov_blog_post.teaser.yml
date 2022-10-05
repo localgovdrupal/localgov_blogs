@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.localgov_blog_post.body
+    - field.field.node.localgov_blog_post.localgov_blog_author
     - field.field.node.localgov_blog_post.localgov_blog_categories
     - field.field.node.localgov_blog_post.localgov_blog_channel
     - field.field.node.localgov_blog_post.localgov_blog_date
@@ -36,6 +37,30 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  localgov_blog_categories:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  localgov_blog_author:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  localgov_blog_channel:
+    type: entity_reference_label
+    label: visually_hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_media_image:
     type: entity_reference_entity_view
     label: hidden
@@ -47,7 +72,5 @@ content:
     region: content
 hidden:
   links: true
-  localgov_blog_categories: true
-  localgov_blog_channel: true
   localgov_blog_related_posts: true
   search_api_excerpt: true

@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.localgov_blog_post.body
     - field.field.node.localgov_blog_post.localgov_blog_categories
+    - field.field.node.localgov_blog_post.localgov_blog_author
     - field.field.node.localgov_blog_post.localgov_blog_channel
     - field.field.node.localgov_blog_post.localgov_blog_date
     - field.field.node.localgov_blog_post.field_media_image
@@ -26,6 +27,14 @@ content:
     weight: 0
     region: content
   localgov_blog_categories:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  localgov_blog_author:
     type: entity_reference_label
     label: hidden
     settings:
