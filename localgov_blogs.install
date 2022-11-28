@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Add the new view for blog authors.
  */
-function localgov_blogs_update_8002() {
+function localgov_blogs_update_8001() {
 
   $views_view_localgov_blog_authors_yml = <<<EOY
 langcode: en
