@@ -6,7 +6,7 @@ dependencies:
   module:
     - taxonomy
     - user
-id: blog_authors
+id: localgov_blog_authors
 label: 'Blog authors'
 module: views
 description: ''
