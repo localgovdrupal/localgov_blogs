@@ -1,6 +1,6 @@
 name: 'LocalGov Blogs'
 description: Provides blog channel and blog post content types with related views for LocalGov Drupal.
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 type: module
 package: LocalGov Drupal
 
