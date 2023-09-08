@@ -7,10 +7,10 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\localgov_roles\RolesHelper;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\views\Views;
-use Drupal\localgov_roles\RolesHelper;
 
 /**
  * Implements hook_entity_extra_field_info().
