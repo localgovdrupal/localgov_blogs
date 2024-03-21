@@ -57,32 +57,27 @@ class PrevNextBlockTest extends BrowserTestBase {
   public function testPrevNextBlock() {
 
     // Check empty when no pages.
-    $overview = $this->createNode([
-      'title' => 'Blog overview',
-      'type' => 'localgov_blogs_overview',
+    $channel = $this->createNode([
+      'title' => 'Blog channel',
+      'type' => 'localgov_blog_channel',
       'status' => NodeInterface::PUBLISHED,
     ]);
-    $this->drupalGet($overview->toUrl()->toString());
+    $this->drupalGet($channel->toUrl()->toString());
     $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextNotContains('Next');
 
-    // Check navigation between overview and 3 pages.
+    // Check navigation between 3 blog posts.
     $pages = [];
     for ($i = 1; $i <= 3; $i++) {
       $pages[] = $this->createNode([
         'title' => 'Blog post ' . $i,
         'type' => 'localgov_blog_post',
         'status' => NodeInterface::PUBLISHED,
-        'localgov_blog_channel' => ['target_id' => $overview->id()],
+        'localgov_blog_channel' => ['target_id' => $channel->id()],
       ]);
     }
-    $this->drupalGet($overview->toUrl()->toString());
-    $this->assertSession()->pageTextNotContains('Prev');
-    $this->assertSession()->pageTextContains('Next');
-    $this->assertSession()->responseContains($pages[0]->toUrl()->toString());
     $this->drupalGet($pages[0]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Prev');
-    $this->assertSession()->responseContains($overview->toUrl()->toString());
+    $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextContains('Next');
     $this->assertSession()->responseContains($pages[1]->toUrl()->toString());
     $this->drupalGet($pages[1]->toUrl()->toString());
@@ -102,8 +97,7 @@ class PrevNextBlockTest extends BrowserTestBase {
     $content_admin = $this->drupalCreateUser(['bypass node access']);
     $this->drupalLogin($content_admin);
     $this->drupalGet($pages[0]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Prev');
-    $this->assertSession()->responseContains($overview->toUrl()->toString());
+    $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextContains('Next');
     $this->assertSession()->responseContains($pages[1]->toUrl()->toString());
     $this->drupalGet($pages[1]->toUrl()->toString());
@@ -118,8 +112,7 @@ class PrevNextBlockTest extends BrowserTestBase {
     $this->drupalLogout();
     // But not for anon.
     $this->drupalGet($pages[0]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Prev');
-    $this->assertSession()->responseContains($overview->toUrl()->toString());
+    $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextContains('Next');
     $this->assertSession()->responseContains($pages[2]->toUrl()->toString());
     $this->drupalGet($pages[2]->toUrl()->toString());
@@ -132,13 +125,13 @@ class PrevNextBlockTest extends BrowserTestBase {
 
     // Check deleting page.
     $pages[0]->delete();
-    $this->drupalGet($overview->toUrl()->toString());
+    $this->drupalGet($pages[1]->toUrl()->toString());
     $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextContains('Next');
-    $this->assertSession()->responseContains($pages[1]->toUrl()->toString());
-    $this->drupalGet($pages[1]->toUrl()->toString());
+    $this->assertSession()->responseContains($pages[2]->toUrl()->toString());
+    $this->drupalGet($pages[2]->toUrl()->toString());
     $this->assertSession()->pageTextContains('Prev');
-    $this->assertSession()->responseContains($overview->toUrl()->toString());
+    $this->assertSession()->responseContains($pages[1]->toUrl()->toString());
     $this->assertSession()->pageTextContains('Next');
     $this->assertSession()->responseContains($pages[2]->toUrl()->toString());
   }
