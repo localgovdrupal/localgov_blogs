@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\localgov_blogs\ChildParentRelationship;
 use Drupal\localgov_roles\RolesHelper;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
@@ -240,4 +241,55 @@ function localgov_blogs_localgov_roles_default(): array {
   }
 
   return $perms;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function localgov_blogs_node_insert(NodeInterface $node) {
+  if ($node->bundle() == 'localgov_blog_post') {
+    return \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(ChildParentRelationship::class)
+      ->pageUpdateChannel($node);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * Implements reference back on overview to page when pages are created.
+ */
+function localgov_blogs_node_update(NodeInterface $node) {
+  if ($node->bundle() == 'localgov_blog_post') {
+    return \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(ChildParentRelationship::class)
+      ->pageUpdateChannel($node);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_prepare_form().
+ *
+ * Check back-reference fields before editing overview.
+ */
+function localgov_blogs_node_prepare_form(NodeInterface $node, $operation, FormStateInterface $form) {
+  if ($node->bundle() == 'localgov_blog_channel') {
+    return \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(ChildParentRelationship::class)
+      ->channelPagesCheck($node);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Check back-reference fields before saving.
+ * Especially if someone has changed a page since form load!
+ */
+function localgov_blogs_node_presave(NodeInterface $node) {
+  if ($node->bundle() == 'localgov_blog_channel') {
+    return \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(ChildParentRelationship::class)
+      ->channelPagesCheck($node);
+  }
 }
