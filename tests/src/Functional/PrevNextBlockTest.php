@@ -78,6 +78,7 @@ class PrevNextBlockTest extends BrowserTestBase {
     }
     $this->drupalGet($pages[0]->toUrl()->toString());
     $this->assertSession()->pageTextNotContains('Prev');
+    $this->assertSession()->pageTextContains('Blog post 1');
     $this->assertSession()->pageTextContains('Next');
     $this->assertSession()->responseContains($pages[1]->toUrl()->toString());
     $this->drupalGet($pages[1]->toUrl()->toString());
