@@ -30,7 +30,7 @@ class PrevNextBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'localgov_base';
+  protected $defaultTheme = 'stark';
 
   /**
    * A user with the 'administer blocks' permission.
@@ -133,7 +133,7 @@ class PrevNextBlockTest extends BrowserTestBase {
     $this->drupalGet($pages[2]->toUrl()->toString());
     $this->assertSession()->pageTextContains('Prev');
     $this->assertSession()->responseContains($pages[1]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Next');
+    $this->assertSession()->pageTextNotContains('Next');
     $this->assertSession()->responseContains($pages[2]->toUrl()->toString());
   }
 
