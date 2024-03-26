@@ -30,7 +30,7 @@ class PrevNextBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stark';
+  protected $defaultTheme = 'localgov_base';
 
   /**
    * A user with the 'administer blocks' permission.
