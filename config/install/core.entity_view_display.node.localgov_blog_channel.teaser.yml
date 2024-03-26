@@ -5,6 +5,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.localgov_blog_channel.body
     - field.field.node.localgov_blog_channel.localgov_blog_channel_featured
+    - field.field.node.localgov_blog_channel.localgov_blog_posts
     - node.type.localgov_blog_channel
   module:
     - text
@@ -26,4 +27,5 @@ hidden:
   links: true
   localgov_blog_channel_featured: true
   localgov_blog_listing: true
+  localgov_blog_posts: true
   search_api_excerpt: true

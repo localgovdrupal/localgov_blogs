@@ -4,10 +4,61 @@ dependencies:
   config:
     - field.field.node.localgov_blog_channel.body
     - field.field.node.localgov_blog_channel.localgov_blog_channel_featured
+    - field.field.node.localgov_blog_channel.localgov_blog_posts
     - node.type.localgov_blog_channel
   module:
+    - field_group
     - path
     - text
+third_party_settings:
+  field_group:
+    group_tabs:
+      children:
+        - group_content
+        - group_blog_post_list
+      label: Tabs
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: tabs
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        direction: vertical
+        width_breakpoint: 640
+    group_content:
+      children:
+        - title
+        - body
+        - localgov_blog_channel_featured
+      label: Content
+      region: content
+      parent_name: group_tabs
+      weight: 20
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
+    group_blog_post_list:
+      children:
+        - localgov_blog_posts
+      label: 'Blog post list'
+      region: content
+      parent_name: group_tabs
+      weight: 21
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
 id: node.localgov_blog_channel.default
 targetEntityType: node
 bundle: localgov_blog_channel
@@ -38,6 +89,12 @@ content:
       match_limit: 10
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  localgov_blog_posts:
+    type: localgov_entity_reference_labels
+    weight: 0
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path

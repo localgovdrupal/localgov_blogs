@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_blogs
+  theme:
+    - localgov_base
+id: localgov_blogs_prev_next_block_base
+theme: localgov_base
+region: content_bottom
+weight: -6
+provider: null
+plugin: localgov_blogs_prev_next_block
+settings:
+  id: localgov_blogs_prev_next_block
+  label: 'Blogs prev next block'
+  provider: localgov_blogs
+  label_display: '0'
+visibility: {  }
