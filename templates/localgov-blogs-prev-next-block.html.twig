@@ -1,0 +1,27 @@
+{#
+/**
+* @file
+* Default theme implementation for the localgov_blogs_prev_next_block block.
+*/
+#}
+<nav class="localgov_blogs--navigation">
+  {% if previous_url %}
+    <a href="{{ previous_url }}" class="localgov-blogs--previous" rel="prev" aria-label="{{ 'Previous'|t }}: {{ previous_title }}">
+      <span class="fa-solid fa-chevron-left"></span>
+      <span class="localgov-blogs--navigation-wrapper">
+        <span class="localgov-blogs--navigation-nextprev">{{ 'Previous'|t }}<span class="visually-hidden">: </span></span>
+        <span class="localgov-blogs--navigation-title">{{ previous_title }}</span>
+      </span>
+    </a>
+  {% endif %}
+
+  {% if next_url %}
+    <a href="{{ next_url }}" class="localgov-blogs--next" rel="next" aria-label="{{ 'Next'|t }}: {{ next_title }}">
+      <span class="localgov-blogs--navigation-wrapper">
+        <span class="localgov-blogs--navigation-nextprev">{{ 'Previous'|t }}<span class="visually-hidden">: </span></span>
+        <span class="localgov-blogs--navigation-title">{{ next_title }}</span>
+        <span class="fa-solid fa-chevron-right"></span>
+      </span>
+    </a>
+  {% endif %}
+</nav>

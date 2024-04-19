@@ -4,7 +4,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.search_result
     - field.field.node.localgov_blog_channel.localgov_blog_channel_featured
-    - field.field.node.localgov_blog_channel.localgov_blog_posts
     - node.type.localgov_blog_channel
   module:
     - user
@@ -21,4 +20,3 @@ content:
 hidden:
   links: true
   localgov_blog_channel_featured: true
-  localgov_blog_posts: true
