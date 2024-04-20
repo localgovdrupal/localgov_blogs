@@ -1,4 +1,4 @@
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/localgovdrupal/localgov_blogs/test.yml)
+![Tests](https://img.shields.io/github/actions/workflow/status/localgovdrupal/localgov_blogs/test.yml)
 
 # LocalGov Drupal Blogs
 
