@@ -144,8 +144,11 @@ function localgov_blogs_field_widget_complete_form_alter(&$field_widget_complete
     // If there are no blog channels display a warning.
     if (count($options) == 1 && isset($options['_none'])) {
       $create_channel_path = 'localgov_blog_channel';
-      if (\Drupal::hasService('domain_group_resolver') && !is_null(\Drupal::service('domain_group_resolver')->getCurrentRouteGroupDomain())) {
-        $create_channel_path = 'group_node:' . $create_channel_path;
+      if (\Drupal::moduleHandler()->moduleExists('localgov_microsites_group')) {
+        $group = localgov_microsites_group_get_by_context();
+        if ($group instanceof GroupInterface) {
+          $create_channel_path = 'group_node:' . $create_channel_path;
+        }
       }
       \Drupal::messenger()->addWarning(t('There are no blogs channels. Please <a href="./@link">create a blog channel</a> to add this post to.', ['@link' => $create_channel_path]));
     }
