@@ -4,13 +4,11 @@ namespace Drupal\localgov_blogs\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\node\NodeInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\NodeInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'Next Previous' block.
@@ -71,7 +69,8 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, 
+    RouteMatchInterface $route_match, EntityTypeManagerInterface $entityTypeManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $route_match;
     $this->entityTypeManager = $entityTypeManager;
@@ -208,7 +207,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     // If this is not the youngest (or oldest) node.
     if (!empty($result) && is_array($result)) {
       $result = array_values($result)[0];
-      $node = \Drupal::entityTypeManager()->getStorage('node')->load($result);      
+      $node = $query->load($result);
 
       return [
         'title' => $node->get('title')->value,
