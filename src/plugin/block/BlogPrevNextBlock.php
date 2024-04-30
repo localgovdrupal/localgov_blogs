@@ -46,11 +46,11 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public static function create(
-      ContainerInterface $container,
-      array $configuration,
-      $plugin_id,
-      $plugin_definition,
-    ) {
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ) {
     return new static(
       $configuration,
       $plugin_id,
@@ -75,12 +75,12 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
    *   The entity type manager.
    */
   public function __construct(
-      array $configuration,
-      $plugin_id,
-      $plugin_definition,
-      RouteMatchInterface $route_match,
-      EntityTypeManagerInterface $entityTypeManager,
-    ) {
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    RouteMatchInterface $route_match,
+    EntityTypeManagerInterface $entityTypeManager,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $route_match;
     $this->entityTypeManager = $entityTypeManager;
@@ -202,7 +202,8 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
       $sort = 'DESC';
     }
 
-    // Lookup 1 node younger (or older) than the current node based upon the `localgov_blog_date` field.
+    // Lookup 1 node younger (or older) than the current node 
+    // based upon the `localgov_blog_date` field.
     $query = $this->entityTypeManager->getStorage('node');
     $query_result = $query->getQuery();
     $result = $query_result->condition('localgov_blog_date', $current_node_date, $comparison_opperator)
@@ -226,4 +227,5 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     }
     return '';
   }
+
 }
