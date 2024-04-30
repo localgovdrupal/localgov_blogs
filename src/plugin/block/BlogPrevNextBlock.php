@@ -202,7 +202,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
       $sort = 'DESC';
     }
 
-    // Lookup 1 node younger (or older) than the current node 
+    // Lookup 1 node younger (or older) than the current node
     // based upon the `localgov_blog_date` field.
     $query = $this->entityTypeManager->getStorage('node');
     $query_result = $query->getQuery();
