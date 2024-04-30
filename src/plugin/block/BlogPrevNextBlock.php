@@ -45,7 +45,12 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+      ContainerInterface $container,
+      array $configuration,
+      $plugin_id,
+      $plugin_definition,
+    ) {
     return new static(
       $configuration,
       $plugin_id,
@@ -69,8 +74,13 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, 
-    RouteMatchInterface $route_match, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(
+      array $configuration,
+      $plugin_id,
+      $plugin_definition,
+      RouteMatchInterface $route_match,
+      EntityTypeManagerInterface $entityTypeManager,
+    ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $route_match;
     $this->entityTypeManager = $entityTypeManager;
@@ -216,5 +226,4 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     }
     return '';
   }
-
 }
