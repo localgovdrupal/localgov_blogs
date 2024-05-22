@@ -136,7 +136,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     $node = $this->routeMatch->getParameter('node');
     if (!empty($node) && $node instanceof NodeInterface) {
       // If there is node add its cachetag.
-      return Cache::mergeTags(parent::getCacheTags(), ['node:*']);
+      return Cache::mergeTags(parent::getCacheTags(), ['node:' . $node->id()]);
     }
     else {
       // Return default tags instead.
@@ -196,6 +196,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     $sort = 'ASC';
     $current_node_date = $node->get('localgov_blog_date')->value;
     $current_langcode = $node->get('langcode')->value;
+    $current_blog_channel = $node->get('localgov_blog_channel')->target_id;
 
     if ($direction === 'prev') {
       $comparison_opperator = '<';
@@ -208,6 +209,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     $query_result = $query->getQuery();
     $result = $query_result->condition('localgov_blog_date', $current_node_date, $comparison_opperator)
       ->condition('type', 'localgov_blog_post')
+      ->condition('localgov_blog_channel', $current_blog_channel)
       ->condition('status', 1)
       ->condition('langcode', $current_langcode)
       ->sort('localgov_blog_date', $sort)

@@ -17,7 +17,7 @@ use Drupal\views\Views;
  */
 function localgov_blogs_theme($existing, $type, $theme, $path) {
   return [
-    'blogs_prev_next_block' => [
+    'localgov_blogs_prev_next_block' => [
       'variables' => [
         'previous_url' => NULL,
         'previous_title' => NULL,
