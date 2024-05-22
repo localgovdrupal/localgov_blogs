@@ -7,7 +7,6 @@
 <nav class="localgov-blog-navigation">
   {% if previous_url %}
     <a href="{{ previous_url }}" class="localgov-blog-navigation__previous" rel="prev" aria-label="{{ 'Previous'|t }}: {{ previous_title }}">
-      <span class="fa-solid fa-chevron-left"></span>
       <span class="localgov-blog-navigation__navigation-wrapper">
         <span class="localgov-blog-navigation__navigation-nextprev">{{ 'Previous'|t }}<span class="visually-hidden">: </span></span>
         <span class="localgov-blog-navigation__navigation-title">{{ previous_title }}</span>
@@ -20,7 +19,6 @@
       <span class="localgov-blog-navigation__navigation-wrapper">
         <span class="localgov-blog-navigation__navigation-nextprev">{{ 'Next'|t }}<span class="visually-hidden">: </span></span>
         <span class=" localgov-blog-navigation__navigation-title">{{ next_title }}</span>
-        <span class="fa-solid fa-chevron-right"></span>
       </span>
     </a>
   {% endif %}
