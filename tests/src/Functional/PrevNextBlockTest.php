@@ -52,18 +52,18 @@ class PrevNextBlockTest extends BrowserTestBase {
   }
 
   /**
-   * Test the contents list block.
+   * Test the Previous / Next Navigation block.
    */
   public function testPrevNextBlock() {
 
-    // create channel
+    // Create channel.
     $channel = $this->createNode([
       'title' => 'Blog Channel',
       'type' => 'localgov_blog_channel',
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    // create 3 posts.
+    // Create 3 posts.
     $posts = [];
     for ($i = 1; $i <= 3; $i++) {
       $posts[] = $this->createNode([
@@ -74,6 +74,7 @@ class PrevNextBlockTest extends BrowserTestBase {
         'localgov_blog_channel' => ['target_id' => $channel->id()],
       ]);
     }
+    // Test Navigation
     $this->drupalGet($posts[0]->toUrl()->toString());
     $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextContains('Next');
