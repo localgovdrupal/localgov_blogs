@@ -74,7 +74,7 @@ class PrevNextBlockTest extends BrowserTestBase {
         'localgov_blog_channel' => ['target_id' => $channel->id()],
       ]);
     }
-    // Test Navigation
+    // Test Navigation.
     $this->drupalGet($posts[0]->toUrl()->toString());
     $this->assertSession()->pageTextNotContains('Prev');
     $this->assertSession()->pageTextContains('Next');
