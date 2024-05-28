@@ -1,4 +1,6 @@
-# LocalGov Blogs
+![Tests](https://img.shields.io/github/actions/workflow/status/localgovdrupal/localgov_blogs/test.yml)
+
+# LocalGov Drupal Blogs
 
 This module provides blog channel and blog post content types with related views for the LocalGov Drupal distribution.
 
