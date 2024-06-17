@@ -263,15 +263,14 @@ function localgov_blogs_localgov_roles_default(): array {
 function localgov_blogs_configure_scheduled_transitions() {
   // Configure scheduled transitions for alert banners.
   $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
-  $bundles = [
-    [
-      'entity_type' => 'node',
-      'bundle' => 'localgov_blog_channel',
-    ],
-    [
-      'entity_type' => 'node',
-      'bundle' => 'localgov_blog_post',
-    ],
+  $bundles = $scheduled_transitions_config->get('bundles');
+  $bundles[] = [
+    'entity_type' => 'node',
+    'bundle' => 'localgov_blog_channel',
+  ];
+  $bundles[] = [
+    'entity_type' => 'node',
+    'bundle' => 'localgov_blog_post',
   ];
   $scheduled_transitions_config->set('bundles', $bundles);
   $scheduled_transitions_config->save();
