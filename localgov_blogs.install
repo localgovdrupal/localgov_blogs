@@ -14,7 +14,6 @@ use Symfony\Component\Yaml\Yaml;
 function localgov_blogs_install($is_syncing) {
   // Configure scheduled transitions if enabled.
   if (!$is_syncing && \Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
-    var_dump('install');
     localgov_blogs_configure_scheduled_transitions();
   }
 }
