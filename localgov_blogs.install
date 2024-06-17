@@ -9,6 +9,17 @@ use Drupal\Core\Config\Config;
 use Symfony\Component\Yaml\Yaml;
 
 /**
+ * Implements hook_install().
+ */
+function localgov_blogs_install($is_syncing) {
+  // Configure scheduled transitions if enabled.
+  if (!$is_syncing && \Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
+    var_dump('install');
+    localgov_blogs_configure_scheduled_transitions();
+  }
+}
+
+/**
  * Add the new view for blog authors.
  */
 function localgov_blogs_update_8001() {
