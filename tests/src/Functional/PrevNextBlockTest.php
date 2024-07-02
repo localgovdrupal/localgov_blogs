@@ -56,38 +56,65 @@ class PrevNextBlockTest extends BrowserTestBase {
    */
   public function testPrevNextBlock() {
 
-    // Create channel.
-    $channel = $this->createNode([
-      'title' => 'Blog Channel',
-      'type' => 'localgov_blog_channel',
+    // Create channel_one.
+    $channel_one = $this->createNode([
+      'title' => 'Blog channel_one',
+      'type' => 'localgov_blog_channel_one',
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    // Create 3 posts.
+    // Create channel_two.
+    $channel_two = $this->createNode([
+      'title' => 'Blog channel_two',
+      'type' => 'localgov_blog_channel_two',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    // Create 6 posts.
+    // Alternate them between channel one and two.
     $posts = [];
-    for ($i = 1; $i <= 3; $i++) {
-      $posts[] = $this->createNode([
+    for ($i = 1; $i <= 6; $i++) {
+      $posts[$i] = $this->createNode([
         'title' => 'Blog post ' . $i,
         'type' => 'localgov_blog_post',
         'localgov_blog_date' => '2024-05-1' . $i,
         'status' => NodeInterface::PUBLISHED,
-        'localgov_blog_channel' => ['target_id' => $channel->id()],
+        'localgov_blog_channel' => ['target_id' => ($i % 2 !== 0 ? $channel_one->id() : $channel_two->id())],
       ]);
     }
     // Test Navigation.
-    $this->drupalGet($posts[0]->toUrl()->toString());
-    $this->assertSession()->pageTextNotContains('Prev');
-    $this->assertSession()->pageTextContains('Next');
-    $this->assertSession()->responseContains($posts[1]->toUrl()->toString());
-    $this->drupalGet($posts[1]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Prev');
-    $this->assertSession()->responseContains($posts[0]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Next');
-    $this->assertSession()->responseContains($posts[2]->toUrl()->toString());
-    $this->drupalGet($posts[2]->toUrl()->toString());
-    $this->assertSession()->pageTextContains('Prev');
-    $this->assertSession()->responseContains($posts[1]->toUrl()->toString());
-    $this->assertSession()->pageTextNotContains('Next');
+    for ($i = 1; $i <= 6; $i++) {
+      $this->drupalGet($posts[$i]->toUrl()->toString());
+
+      // Post one and two will not have a prev link.
+      if ($i <= 2) {
+        $this->assertSession()->pageTextNotContains('Prev');
+      }
+      else {
+        $this->assertSession()->pageTextContains('Prev');
+      }
+
+      // Post five and six will not have a next link.
+      if ($i >= 5) {
+        $this->assertSession()->pageTextNotContains('Next');
+      }
+      else {
+        $this->assertSession()->pageTextContains('Next');
+      }
+
+      // Test the prev link is to the post two before, since posts will
+      // alternate channels this tests the prev / next links target the correct
+      // blog channel.
+      $prev = $i - 2;
+      if ($prev >= 1) {
+        $this->assertSession()->responseContains($posts[$prev]->toUrl()->toString());
+      }
+      $next = $i + 2;
+      if ($next <= 6) {
+        $this->assertSession()->responseContains($posts[$next]->toUrl()->toString());
+      }
+
+    }
   }
 
 }
