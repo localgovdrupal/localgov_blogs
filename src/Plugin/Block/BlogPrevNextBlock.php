@@ -192,35 +192,45 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
    *   Find the alias of the next node.
    */
   private function generateNextPrevious($node, $direction = self::DIRECTION__NEXT) {
-    $comparison_opperator = '>';
+    $comparison_opperator = '>=';
     $sort = 'ASC';
+    $current_node_id = $node->id();
     $current_node_date = $node->get('localgov_blog_date')->value;
     $current_langcode = $node->get('langcode')->value;
     $current_blog_channel = $node->get('localgov_blog_channel')->target_id;
 
     if ($direction === 'prev') {
-      $comparison_opperator = '<';
+      $comparison_opperator = '<=';
       $sort = 'DESC';
     }
 
     // Lookup 1 node younger (or older) than the current node
     // based upon the `localgov_blog_date` field.
-    $query = $this->entityTypeManager->getStorage('node');
-    $query_result = $query->getQuery();
-    $result = $query_result->condition('localgov_blog_date', $current_node_date, $comparison_opperator)
+    $storage = $this->entityTypeManager->getStorage('node');
+    $query_result = $storage->getQuery();
+    $results = $query_result->condition('localgov_blog_date', $current_node_date, $comparison_opperator)
       ->condition('type', 'localgov_blog_post')
       ->condition('localgov_blog_channel', $current_blog_channel)
       ->condition('status', 1)
       ->condition('langcode', $current_langcode)
       ->sort('localgov_blog_date', $sort)
-      ->range(0, 1)
+      ->sort('created', $sort)
+      ->sort('nid', $sort)
       ->accessCheck(TRUE)
       ->execute();
 
+    // Since sometimes the next / prev blog post could be on the same day, and
+    // the query will not have sufficent granularity yet, we need to retrive
+    // an array of all following / previous including the current post.
+    // We can then search in the array and find the next one in the list.
+    // @todo possibly remove if localgov_blog_date changed to a datetime field.
+    $results = array_values($results);
+    $index = array_search($current_node_id, $results, TRUE);
+    $result = $results[$index + 1] ?? NULL;
+
     // If this is not the youngest (or oldest) node.
-    if (!empty($result) && is_array($result)) {
-      $result = array_values($result)[0];
-      $node = $query->load($result);
+    if (!empty($result)) {
+      $node = $storage->load($result);
 
       return [
         'title' => $node->get('title')->value,

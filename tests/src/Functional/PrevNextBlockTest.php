@@ -82,6 +82,7 @@ class PrevNextBlockTest extends BrowserTestBase {
         'localgov_blog_channel' => ['target_id' => ($i % 2 !== 0 ? $channel_one->id() : $channel_two->id())],
       ]);
     }
+
     // Test Navigation.
     for ($i = 1; $i <= 6; $i++) {
       $this->drupalGet($posts[$i]->toUrl()->toString());
@@ -114,6 +115,51 @@ class PrevNextBlockTest extends BrowserTestBase {
         $this->assertSession()->responseContains($posts[$next]->toUrl()->toString());
       }
 
+    }
+  }
+
+  /**
+   * Test the correct next / prev posts appear when all the same date.
+   */
+  public function testPrevNextWithSameDate() {
+
+    // Create a channel.
+    $channel = $this->createNode([
+      'title' => 'Blog channel_one',
+      'type' => 'localgov_blog_channel_one',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    // Create 6 posts, all on same date.
+    $posts = [];
+    for ($i = 1; $i <= 6; $i++) {
+      $posts[$i] = $this->createNode([
+        'title' => 'Blog post ' . $i,
+        'type' => 'localgov_blog_post',
+        'localgov_blog_date' => date('Y-m-d'),
+        'status' => NodeInterface::PUBLISHED,
+        'localgov_blog_channel' => ['target_id' => $channel->id()],
+        'created' => strtotime('Midnight +' . $i . ' hour'),
+        'changed' => strtotime('Midnight +' . $i . ' hour'),
+      ]);
+    }
+
+    // Loop through each post to make sure next / prev has them in order.
+    // This is done via xpath to test the correct link.
+    for ($i = 1; $i <= 6; $i++) {
+      $this->drupalGet($posts[$i]->toUrl()->toString());
+      $prev = $i - 1;
+      if ($prev >= 1) {
+        $prev_query = $this->xpath('.//*[contains(concat(" ",normalize-space(@class)," ")," localgov-blog-navigation__previous ")]');
+        $prev_link = $prev_query[0]->getAttribute('href');
+        $this->assertEquals($posts[$prev]->toUrl()->toString(), $prev_link);
+      }
+      $next = $i + 1;
+      if ($next <= 6) {
+        $next_query = $this->xpath('.//*[contains(concat(" ",normalize-space(@class)," ")," localgov-blog-navigation__next ")]');
+        $next_link = $next_query[0]->getAttribute('href');
+        $this->assertEquals($posts[$next]->toUrl()->toString(), $next_link);
+      }
     }
   }
 
