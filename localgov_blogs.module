@@ -5,6 +5,7 @@
  * LocalGov DrupalBlogs module file.
  */
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\localgov_roles\RolesHelper;
@@ -27,6 +28,17 @@ function localgov_blogs_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function localgov_blogs_modules_installed($modules, $is_syncing) {
+
+  // Configure scheduled transitions if it's being installed.
+  if (in_array('scheduled_transitions', $modules, TRUE)) {
+    localgov_blogs_configure_scheduled_transitions();
+  }
 }
 
 /**
@@ -260,4 +272,28 @@ function localgov_blogs_localgov_roles_default(): array {
   }
 
   return $perms;
+}
+
+/**
+ * Configure scheduled transitions.
+ */
+function localgov_blogs_configure_scheduled_transitions() {
+  // Configure scheduled transitions for alert banners.
+  $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
+  $bundles = $scheduled_transitions_config->get('bundles');
+  $bundles[] = [
+    'entity_type' => 'node',
+    'bundle' => 'localgov_blog_channel',
+  ];
+  $bundles[] = [
+    'entity_type' => 'node',
+    'bundle' => 'localgov_blog_post',
+  ];
+  $scheduled_transitions_config->set('bundles', $bundles);
+  $scheduled_transitions_config->save();
+
+  Cache::invalidateTags([
+    'scheduled_transition_settings',
+    'config:scheduled_transitions.settings',
+  ]);
 }
