@@ -192,7 +192,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
    *   Find the alias of the next node.
    */
   private function generateNextPrevious($node, $direction = self::DIRECTION__NEXT) {
-    $comparison_opperator = '>=';
+    $comparison_operator = '>=';
     $sort = 'ASC';
     $current_node_id = $node->id();
     $current_node_date = $node->get('localgov_blog_date')->value;
@@ -200,7 +200,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     $current_blog_channel = $node->get('localgov_blog_channel')->target_id;
 
     if ($direction === 'prev') {
-      $comparison_opperator = '<=';
+      $comparison_operator = '<=';
       $sort = 'DESC';
     }
 
@@ -208,7 +208,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
     // based upon the `localgov_blog_date` field.
     $storage = $this->entityTypeManager->getStorage('node');
     $query_result = $storage->getQuery();
-    $results = $query_result->condition('localgov_blog_date', $current_node_date, $comparison_opperator)
+    $results = $query_result->condition('localgov_blog_date', $current_node_date, $comparison_operator)
       ->condition('type', 'localgov_blog_post')
       ->condition('localgov_blog_channel', $current_blog_channel)
       ->condition('status', 1)
