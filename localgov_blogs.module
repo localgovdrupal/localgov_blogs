@@ -106,7 +106,7 @@ function localgov_blogs_form_alter(&$form, FormStateInterface $form_state, $form
     $channel = $post->get('localgov_blog_channel')->entity;
     if (!is_null($channel)) {
       $featured_posts = $channel->get('localgov_blog_channel_featured')->getValue();
-      $promoted = in_array($post->id(), array_column($featured_posts, 'target_id'));
+      $promoted = in_array($post->id(), array_column($featured_posts, 'target_id'), TRUE);
     }
     else {
       $promoted = FALSE;
@@ -139,7 +139,7 @@ function localgov_blogs_blog_channel_promote_submit(array $form, FormStateInterf
     $channel = $post->get('localgov_blog_channel')->entity;
     $featured_posts = $channel->get('localgov_blog_channel_featured')->getValue();
     $to_promote = $form_state->getValue('localgov_blog_channel_promote');
-    $is_promoted = in_array($post->id(), array_column($featured_posts, 'target_id'));
+    $is_promoted = in_array($post->id(), array_column($featured_posts, 'target_id'), TRUE);
 
     if ($to_promote != $is_promoted) {
       if ($to_promote) {
@@ -152,7 +152,7 @@ function localgov_blogs_blog_channel_promote_submit(array $form, FormStateInterf
       else {
 
         // Remove from promoted posts.
-        $i = array_search(['target_id' => $post->id()], $featured_posts);
+        $i = array_search(['target_id' => $post->id()], $featured_posts, TRUE);
         $channel->get('localgov_blog_channel_featured')->removeItem($i);
         $channel->save();
       }
