@@ -154,7 +154,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
   /**
    * Lookup the previous node,youngest node which is still older than the node.
    *
-   * @param string $node
+   * @param \Drupal\node\NodeInterface $node
    *   Show current page node id.
    *
    * @return array
@@ -167,7 +167,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
   /**
    * Lookup the next node,oldest node which is still younger than the node.
    *
-   * @param string $node
+   * @param \Drupal\node\NodeInterface $node
    *   Show current page node id.
    *
    * @return array

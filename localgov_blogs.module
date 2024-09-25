@@ -174,7 +174,9 @@ function localgov_blogs_field_widget_complete_form_alter(&$field_widget_complete
     if (count($options) == 1 && isset($options['_none'])) {
       $create_channel_path = 'localgov_blog_channel';
       if (\Drupal::moduleHandler()->moduleExists('localgov_microsites_group')) {
+        // @phpstan-ignore-next-line Ignore the next line as this is only present on microsites.
         $group = localgov_microsites_group_get_by_context();
+        // @phpstan-ignore-next-line Ignore the next line as this is only present on microsites.
         if ($group instanceof GroupInterface) {
           $create_channel_path = 'group_node:' . $create_channel_path;
         }
