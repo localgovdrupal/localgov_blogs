@@ -182,7 +182,7 @@ class BlogPrevNextBlock extends BlockBase implements ContainerFactoryPluginInter
   /**
    * Lookup the next or previous node.
    *
-   * @param string $node
+   * @param \Drupal\node\NodeInterface $node
    *   Get current page node id.
    * @param string $direction
    *   Default value is "next" and other value come from
