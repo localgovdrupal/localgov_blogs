@@ -14,6 +14,23 @@ use Drupal\node\NodeInterface;
 use Drupal\views\Views;
 
 /**
+ * Implements hook_theme().
+ */
+function localgov_blogs_theme($existing, $type, $theme, $path) {
+  return [
+    'localgov_blogs_prev_next_block' => [
+      'variables' => [
+        'previous_url' => NULL,
+        'previous_title' => NULL,
+        'next_url' => NULL,
+        'next_title' => NULL,
+        'show_title' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
  * Implements hook_modules_installed().
  */
 function localgov_blogs_modules_installed($modules, $is_syncing) {
@@ -89,7 +106,7 @@ function localgov_blogs_form_alter(&$form, FormStateInterface $form_state, $form
     $channel = $post->get('localgov_blog_channel')->entity;
     if (!is_null($channel)) {
       $featured_posts = $channel->get('localgov_blog_channel_featured')->getValue();
-      $promoted = in_array($post->id(), array_column($featured_posts, 'target_id'));
+      $promoted = in_array($post->id(), array_column($featured_posts, 'target_id'), TRUE);
     }
     else {
       $promoted = FALSE;
@@ -122,7 +139,7 @@ function localgov_blogs_blog_channel_promote_submit(array $form, FormStateInterf
     $channel = $post->get('localgov_blog_channel')->entity;
     $featured_posts = $channel->get('localgov_blog_channel_featured')->getValue();
     $to_promote = $form_state->getValue('localgov_blog_channel_promote');
-    $is_promoted = in_array($post->id(), array_column($featured_posts, 'target_id'));
+    $is_promoted = in_array($post->id(), array_column($featured_posts, 'target_id'), TRUE);
 
     if ($to_promote != $is_promoted) {
       if ($to_promote) {
@@ -135,7 +152,7 @@ function localgov_blogs_blog_channel_promote_submit(array $form, FormStateInterf
       else {
 
         // Remove from promoted posts.
-        $i = array_search(['target_id' => $post->id()], $featured_posts);
+        $i = array_search(['target_id' => $post->id()], $featured_posts, TRUE);
         $channel->get('localgov_blog_channel_featured')->removeItem($i);
         $channel->save();
       }
@@ -157,7 +174,9 @@ function localgov_blogs_field_widget_complete_form_alter(&$field_widget_complete
     if (count($options) == 1 && isset($options['_none'])) {
       $create_channel_path = 'localgov_blog_channel';
       if (\Drupal::moduleHandler()->moduleExists('localgov_microsites_group')) {
+        // @phpstan-ignore-next-line Ignore the next line as this is only present on microsites.
         $group = localgov_microsites_group_get_by_context();
+        // @phpstan-ignore-next-line Ignore the next line as this is only present on microsites.
         if ($group instanceof GroupInterface) {
           $create_channel_path = 'group_node:' . $create_channel_path;
         }
