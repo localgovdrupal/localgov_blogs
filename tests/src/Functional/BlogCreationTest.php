@@ -45,7 +45,7 @@ class BlogCreationTest extends BrowserTestBase {
   /**
    * Test the blog post create form.
    */
-  public function testBlogChannelSelection() {
+  public function testBlogChannelSelection(): void {
 
     // Check no blog channel message.
     $this->drupalGet('/node/add/localgov_blog_post');
