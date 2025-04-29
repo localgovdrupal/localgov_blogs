@@ -16,7 +16,7 @@ class PageHeaderSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       PageHeaderDisplayEvent::EVENT_NAME => ['setPageHeader', 0],
     ];
@@ -25,7 +25,7 @@ class PageHeaderSubscriber implements EventSubscriberInterface {
   /**
    * Hide page header block.
    */
-  public function setPageHeader(PageHeaderDisplayEvent $event) {
+  public function setPageHeader(PageHeaderDisplayEvent $event): void {
     if ($event->getEntity() instanceof Node &&
           ($event->getEntity()->bundle() == 'localgov_blog_post')
       ) {

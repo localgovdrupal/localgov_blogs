@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Implements hook_install().
  */
-function localgov_blogs_install($is_syncing) {
+function localgov_blogs_install($is_syncing): void {
   // Configure scheduled transitions if enabled.
   if (!$is_syncing && \Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
     localgov_blogs_configure_scheduled_transitions();
@@ -21,7 +21,7 @@ function localgov_blogs_install($is_syncing) {
 /**
  * Add the new view for blog authors.
  */
-function localgov_blogs_update_8001() {
+function localgov_blogs_update_8001(): void {
 
   $views_view_localgov_blog_authors_yml = <<<EOY
 langcode: en

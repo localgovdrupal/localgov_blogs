@@ -54,7 +54,7 @@ class PrevNextBlockTest extends BrowserTestBase {
   /**
    * Test the Previous / Next Navigation block.
    */
-  public function testPrevNextBlock() {
+  public function testPrevNextBlock(): void {
 
     // Create channel_one.
     $channel_one = $this->createNode([
@@ -121,7 +121,7 @@ class PrevNextBlockTest extends BrowserTestBase {
   /**
    * Test the correct next / prev posts appear when all the same date.
    */
-  public function testPrevNextWithSameDate() {
+  public function testPrevNextWithSameDate(): void {
 
     // Create a channel.
     $channel = $this->createNode([
