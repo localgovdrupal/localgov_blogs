@@ -25,7 +25,7 @@ composer require localgovdrupal/localgov_blogs:^1.0.0
 
 ## Issues
 
-If you run into issues using this module, please report them at https://github.com/localgovdrupal/localgov_blogss/issues
+If you run into issues using this module, please report them at https://github.com/localgovdrupal/localgov_blogs/issues
 
 ## Maintainers 
 
