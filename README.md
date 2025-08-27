@@ -27,6 +27,7 @@ composer require localgovdrupal/localgov_blogs:^1.0.0
 
 If you run into issues using this module, please report them at https://github.com/localgovdrupal/localgov_blogs/issues
 
-## Maintainers 
+## Maintainers
 
-TBC
+- Stephen Cox - [Drupal (stephen-cox)](https://www.drupal.org/u/stephen-cox) | [GitHub (stephen-cox)](https://github.com/stephen-cox)
+- Mark Conroy - [Drupal (markconroy)](https://www.drupal.org/u/markconroy) | [GitHub (markconroy)](https://github.com/markconroy)
