@@ -29,6 +29,9 @@ class BlogCreationTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'localgov_core',
+    'localgov_media',
+    'localgov_topics',
     'localgov_blogs',
   ];
 

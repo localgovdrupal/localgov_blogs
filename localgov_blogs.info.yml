@@ -12,7 +12,11 @@ dependencies:
   - drupal:views
   # Contrib
   - field_group:field_group
+  - search_api:search_api
   # LocalGov Drupal
   - localgov_core:localgov_core
   - localgov_core:localgov_media
   - localgov_topics:localgov_topics
+
+test_dependencies:
+  - localgov_core:localgov_media_test_config

@@ -24,6 +24,9 @@ class PrevNextBlockTest extends BrowserTestBase {
     'block',
     'path',
     'options',
+    'localgov_core',
+    'localgov_media',
+    'localgov_topics',
     'localgov_blogs',
   ];
 
